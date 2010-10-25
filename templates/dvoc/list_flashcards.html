@@ -1,7 +1,6 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <h1>It works!</h1>
-  </body>
-</html>
+    <h1>Flash cards:</h1>
+    <ul>
+    {% for flashcard in flashcard_list %}
+      <li>{{ flashcard.front_view }}</li>
+    {% endfor %}
+    </ul>
