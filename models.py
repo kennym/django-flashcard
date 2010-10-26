@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 class FlashCard(models.Model):
     """
@@ -12,3 +13,7 @@ class FlashCard(models.Model):
     back_view = models.CharField(
                     max_length = 200,
                     verbose_name = "Back")
+
+class FlashCardForm(ModelForm):
+    class Meta:
+        model = FlashCard
