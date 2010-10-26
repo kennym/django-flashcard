@@ -1,5 +1,10 @@
-  {% block content %}
+{% extends "base.html" %}
+
+  {% block header %}
     <h1>Flashcards:</h1>
+  {% endblock %}
+
+  {% block content %}
     <ul>
     {% for flashcard in flashcard_list %}
         <li>{{ flashcard.front_view }} - {{ flashcard.back_view }}</li>

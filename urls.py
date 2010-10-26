@@ -8,6 +8,7 @@ __author__ = "Kenny Meyer"
 __email__ = "knny.myer@gmail.com"
 
 from django.conf.urls.defaults import *
+
 from dj.dvoc import views
 
 
@@ -17,5 +18,5 @@ urlpatterns = patterns('',
         name = 'list_flashcards'),
     url(r'^create/$',
         views.create_flashcard,
-        name = 'create_flashcard')
+        name = 'create_flashcard'),
 )
