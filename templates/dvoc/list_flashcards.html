@@ -1,6 +1,8 @@
-    <h1>Flash cards:</h1>
+  {% block content %}
+    <h1>Flashcards:</h1>
     <ul>
     {% for flashcard in flashcard_list %}
-      <li>{{ flashcard.front_view }}</li>
+        <li>{{ flashcard.front_view }} - {{ flashcard.back_view }}</li>
     {% endfor %}
     </ul>
+  {% endblock %}

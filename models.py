@@ -1,9 +1,10 @@
 from django.db import models
 from django.forms import ModelForm
 
+
 class FlashCard(models.Model):
     """
-    A basic Flashcard
+    A basic Flashcard.
 
     Has a front and a back view.
     """
