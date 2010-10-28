@@ -27,6 +27,7 @@
 
   <!-- CSS : implied media="all" -->
   <link rel="stylesheet" href="/static/css/style.css?v=2">
+  <link rel="stylesheet" href="/static/css/960.css">
 
   <!-- Uncomment if you are specifically targeting less enabled mobile browsers
   <link rel="stylesheet" media="handheld" href="/static/css/handheld.css?v=2">  -->
@@ -39,14 +40,14 @@
 
 <body>
 
-  <div id="container">
+  <div id="container" class="container_12">
     <header>
       {% block header %}
 
       {% endblock %}
     </header>
     
-    <div id="main">
+    <div id="main" class="container_12">
       {% block content %}
 
       {% endblock %}

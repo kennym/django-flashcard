@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
-    {% block content %}
-      <h1>Create a new flashcard</h1>
-      {{ formset.management_form }}
-      <form method="post" action="">{% csrf_token %}
-          {{ formset }}
-      <input type="submit" name="Submit" value="Submit this form"> 
-      </form>
-    {% endblock %}
+      {% block header %}
+        <h1>Create a new flashcard</h1>
+      {% endblock %}
+
+      {% block content %}
+        {{ formset.management_form }}
+        <form method="post" action="">{% csrf_token %}
+            {{ formset }}
+        <input type="submit" name="Submit" value="Submit this form"> 
+        </form>
+      {% endblock %}
