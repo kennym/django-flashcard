@@ -29,7 +29,6 @@ def create_flashcard(request, template_name='create_flashcard.html'):
             queryset=FlashCard.objects.filter(front_view__startswith='0'))
         if formset.is_valid():
             formset.save()
-
     else:
         formset = FlashCardFormSet(
             queryset=FlashCard.objects.filter(front_view__startswith='0'))
