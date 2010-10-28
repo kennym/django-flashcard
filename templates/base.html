@@ -40,24 +40,37 @@
 
 <body>
 
-  <div id="container" class="container_12">
-    <header>
+  <div id="container" >
+    <header class="container_12">
+      <div class="grid_12">
       {% block header %}
 
       {% endblock %}
-      <div class="prefix_1 grid_10">
-        <a href="/voc/">View flashcards</a> - <a href="/voc/create">Add flashcard</a>
       </div>
-      <div class="clear"></div>
     </header>
-    
-    <div id="main" class="container_12">
-      {% block content %}
 
+    <div class="clear"></div>
+
+    <div id="main" class="container_12">
+      <div class="card_container grid_8">
+      {% block content %}
       {% endblock %}
+      </div>
+      <div class="sidebar grid_4">
+        <ul>
+          <li>
+            <a href="/voc/">View flashcards</a>
+          </li>
+          <li>
+            <a href="/voc/create">Add flashcard</a>
+          </li>
+      </div>
     </div>
-    
+
+    <div class="clear"></div>
+
     <footer class="container_12">
+
     </footer>
   </div> <!--! end of #container -->
 
