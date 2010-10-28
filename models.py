@@ -18,7 +18,15 @@ class FlashCard(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('show_details', [str(self.id)])
-    
+
+    @models.permalink
+    def edit(self):
+        return ('edit_flashcard', [str(self.id)])
+
+    @models.permalink
+    def delete(self):
+        return ('delete_flashcard', [str(self.id)])
+
     def __unicode__(self):
         return u"%s - %s" % (self.front, self.back)
 

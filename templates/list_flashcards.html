@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
     {% block header %}
-      <h1>Flashcard:</h1>
+      <h1>Flashcards:</h1>
     {% endblock %}
 
     {% block content %}
       <div class="card_container prefix_2 grid_8 suffix_2">
-          <p>{{ object_detail.front }} - {{ object_detail.back }}</p>
+          <ul>
+          {% for flashcard in flashcard_list %}
+              <li>
+                <b>
+                  <a href="{{ flashcard.get_absolute_url }}">{{ flashcard.front }}</a> - 
+                  {{ flashcard.back }} - 
+                </b>
+                  <a href="{{ flashcard.edit }}">Edit</a> - 
+                  <a href="{{ flashcard.delete }}">Delete</a>
+              </li>
+          {% endfor %}
+          </ul>
       </div>
     {% endblock %}
