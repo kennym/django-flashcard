@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+    {% block header %}
+      <h1>Flashcards:</h1>
+    {% endblock %}
+
+    {% block content %}
+      <div class="card_container prefix_2 grid_8 suffix_2">
+          <ul>
+          {% for flashcard in flashcard_list %}
+              <li>{{ flashcard.front }} - {{ flashcard.back }}</li>
+          {% endfor %}
+          </ul>
+      </div>
+    {% endblock %}

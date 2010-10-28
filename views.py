@@ -17,6 +17,16 @@ def list_flashcards(request, template_name='list_flashcards.html'):
 
     return render_to_response(template_name, return_dict)
 
+def show_details_about(request, response_id, template_name='show_details.html'):
+    """
+    """
+    queryset = get_object_or_404(FlashCard.objects.filter(id=response_id))
+    return_dict = {
+        'object_detail': queryset
+    }
+
+    return render_to_response(template_name, return_dict)
+
 @csrf_protect
 def create_flashcard(request, template_name='create_flashcard.html'):
     """

@@ -8,12 +8,19 @@ class FlashCard(models.Model):
 
     Has a front and a back view.
     """
-    front_view = models.CharField(
+    front = models.CharField(
                     max_length = 200,
                     verbose_name = "Front")
-    back_view = models.CharField(
+    back = models.CharField(
                     max_length = 200,
                     verbose_name = "Back")
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('show_details', [str(self.id)])
+    
+    def __unicode__(self):
+        return u"%s - %s" % (self.front, self.back)
 
 class FlashCardForm(ModelForm):
     class Meta:
