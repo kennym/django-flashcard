@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import ModelForm
 
 
+
 class FlashCard(models.Model):
     """
     A basic Flashcard.
@@ -14,6 +15,8 @@ class FlashCard(models.Model):
     back = models.CharField(
                     max_length = 200,
                     verbose_name = "Back")
+
+    easy_factor = models.FloatField(default = 2.5)
 
     @models.permalink
     def get_absolute_url(self):
@@ -30,6 +33,13 @@ class FlashCard(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.front, self.back)
 
+    class Meta:
+        verbose_name = "Flashcard"
+        verbose_name_plural = "Flashcards"
+
+
 class FlashCardForm(ModelForm):
     class Meta:
         model = FlashCard
+        exclude = ('easy_factor', )
+
