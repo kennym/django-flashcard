@@ -215,14 +215,11 @@ h2 {
     font-size: 1.5em;
 }
 
-
-
-
-
-
-
-
-
+.front_view, 
+.back_view {
+    padding: 5px;
+    border: 1px dashed;
+}
 
 
 /*
