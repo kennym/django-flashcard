@@ -5,16 +5,19 @@
     {% endblock %}
 
     {% block content %}
-          <ul>
           {% for flashcard in flashcard_list %}
-              <li>
-                <b>
-                  <a href="{{ flashcard.get_absolute_url }}">{{ flashcard.front }}</a> - 
-                  {{ flashcard.back }} - 
-                </b>
-                  <a href="{{ flashcard.edit }}">Edit</a> - 
-                  <a href="{{ flashcard.delete }}">Delete</a>
-              </li>
+            <div class="front_view grid_7">
+              <h2>
+                <a href="{{ flashcard.get_absolute_url }}">{{ flashcard.front }}</a>
+              </h2>
+              <br />
+              {{ flashcard.back }}
+            </div>
+
+            <!-- Somehow floating nowhere... Fix this. -->
+            <a href="{{ flashcard.edit }}">Edit</a>
+            <a href="{{ flashcard.delete }}">Delete</a>
+
+            <div class="clear"></div>
           {% endfor %}
-          </ul>
     {% endblock %}
