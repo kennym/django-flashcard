@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response
-from django.forms.models import modelformset_factory
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 
@@ -35,18 +34,13 @@ def create_flashcard(request, template_name='create_flashcard.html'):
     """
     Return a form for creating a flashcard.
     """
-    FlashCardFormSet = modelformset_factory(FlashCard)
     if request.method == "POST":
-        formset = FlashCardFormSet(
-            request.POST, request.FILES,
-            queryset = FlashCard.objects.filter(front__startswith='0'))
+        formset = FlashCardForm(data=request.POST)
         if formset.is_valid():
             formset.save()
-            # FIXME: Should be done smarter.
-            return HttpResponseRedirect('/voc/')
+            return redirect(to='list_flashcards')
     else:
-        formset = FlashCardFormSet(
-            queryset=FlashCard.objects.filter(front__startswith='0'))
+        formset = FlashCardForm()
 
     return_dict = {
         'formset': formset
@@ -75,10 +69,9 @@ def edit_flashcard(request, flashcard_id, template_name='edit_flashcard.html'):
     return render_to_response(template_name, return_dict,
                              context_instance=RequestContext(request))
 
-def delete_flashcard(request, flashcard_id,
-                     template_name='delete_flashcard.html'):
+def delete_flashcard(request, flashcard_id):
     """
     Delete a flashcard given the `ID`.
     """
     FlashCard.objects.filter(id = flashcard_id).delete()
-    return render_to_response(template_name)
+    return redirect('list_flashcards') # Redirect to the flashcard list
