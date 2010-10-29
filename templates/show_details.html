@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
     {% block header %}
-      <h1>Flashcard:</h1>
+      <h1>Flashcard #{{ object_id }}:</h1>
     {% endblock %}
 
     {% block content %}
-      <div class="card_container prefix_2 grid_8 suffix_2">
-          <!-- Add content -->
-      </div>
+      <p>{{ object_detail.front }} - {{ object_detail.back }}</p>
+
+      <p>
+        <a href="{{ object_detail.delete }}">Delete</a>
+      </p>
     {% endblock %}
