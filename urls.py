@@ -7,6 +7,8 @@ from django.conf.urls.defaults import *
 
 from dj.dvoc import views
 
+from memorize.views import next_practice_item
+
 
 urlpatterns = patterns('',
     url(r'^$',
@@ -21,7 +23,11 @@ urlpatterns = patterns('',
     url(r'^flashcard/(\d+)/delete/$',
         views.delete_flashcard,
         name = 'delete_flashcard'),
-    url(r'^create/$',
+    url(r'^flashcard/create/$',
         views.create_flashcard,
         name = 'create_flashcard'),
+    url(r'^flashcard/next/$',
+        next_practice_item,
+        {'template': 'memorize/next.html'},
+        name='next-flashcard')
 )

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.csrf import csrf_protect
@@ -6,6 +7,7 @@ from django.template import RequestContext
 from dvoc.models import FlashCard, FlashCardForm
 
 
+@login_required
 def list_flashcards(request, template_name='list_flashcards.html'):
     """
     Return a list with flash cards.
@@ -17,6 +19,7 @@ def list_flashcards(request, template_name='list_flashcards.html'):
 
     return render_to_response(template_name, return_dict)
 
+@login_required
 def show_details_about(request, request_id, template_name='show_details.html'):
     """
     Show the details about a flashcard, given the ID.
@@ -29,6 +32,7 @@ def show_details_about(request, request_id, template_name='show_details.html'):
 
     return render_to_response(template_name, return_dict)
 
+@login_required
 @csrf_protect
 def create_flashcard(request, template_name='create_flashcard.html'):
     """
@@ -37,6 +41,7 @@ def create_flashcard(request, template_name='create_flashcard.html'):
     if request.method == "POST":
         formset = FlashCardForm(data=request.POST)
         if formset.is_valid():
+            formset.instance.user = request.user
             formset.save()
             return redirect(to='list_flashcards')
     else:
@@ -49,6 +54,7 @@ def create_flashcard(request, template_name='create_flashcard.html'):
     return render_to_response(template_name, return_dict,
                              context_instance=RequestContext(request))
 
+@login_required
 @csrf_protect
 def edit_flashcard(request, flashcard_id, template_name='edit_flashcard.html'):
     """
@@ -69,6 +75,7 @@ def edit_flashcard(request, flashcard_id, template_name='edit_flashcard.html'):
     return render_to_response(template_name, return_dict,
                              context_instance=RequestContext(request))
 
+@login_required
 def delete_flashcard(request, flashcard_id):
     """
     Delete a flashcard given the `ID`.

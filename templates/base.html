@@ -39,13 +39,19 @@
 </head>
 
 <body>
-
   <div id="container" >
     <header class="container_12">
-      <div class="grid_12">
+      <div class="grid_10">
       {% block header %}
 
       {% endblock %}
+      </div>
+      <div class="grid_2">
+      {% if user.is_authenticated %}
+          <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+      {% else %}
+          <p>Welcome, new user. Please log in.</p>
+      {% endif %}
       </div>
     </header>
 
@@ -59,10 +65,10 @@
       <div class="sidebar grid_4">
         <ul>
           <li>
-            <a href="/voc/">View flashcards</a>
+          <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
           </li>
           <li>
-            <a href="/voc/create">Add flashcard</a>
+          <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
           </li>
         </ul>
       </div>

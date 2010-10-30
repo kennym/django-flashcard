@@ -4,7 +4,7 @@ from dj.dvoc.models import FlashCard
 from django.contrib import admin
 
 class FlashCardAdmin(admin.ModelAdmin):
-    fields = ['front', 'back', 'easy_factor']
-    list_display = ('front', 'back', 'easy_factor')
+    fields = ['front', 'back', 'user']
+    list_display = ('front', 'back', 'user')
 
 admin.site.register(FlashCard, FlashCardAdmin)

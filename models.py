@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
-
 
 
 class FlashCard(models.Model):
@@ -15,8 +15,7 @@ class FlashCard(models.Model):
     back = models.CharField(
                     max_length = 200,
                     verbose_name = "Back")
-
-    easy_factor = models.FloatField(default = 2.5)
+    user = models.ForeignKey(User)
 
     @models.permalink
     def get_absolute_url(self):
@@ -41,5 +40,4 @@ class FlashCard(models.Model):
 class FlashCardForm(ModelForm):
     class Meta:
         model = FlashCard
-        exclude = ('easy_factor', )
-
+        exclude = ('user')
