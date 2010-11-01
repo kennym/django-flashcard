@@ -217,6 +217,7 @@ h2 {
 
 .front_view, 
 .back_view {
+    margin: 5px 0px 0px 0px;
     padding: 5px;
     border: 1px solid;
 }
