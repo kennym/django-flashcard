@@ -218,7 +218,7 @@ h2 {
 .front_view, 
 .back_view {
     padding: 5px;
-    border: 1px dashed;
+    border: 1px solid;
 }
 
 /* 
