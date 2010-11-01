@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+    {% block title %}
+      Flashcard "{{object_detail.front}}"
+    {% endblock %}
+
     {% block header %}
       <h1>Flashcard #{{ object_id }}:</h1>
     {% endblock %}

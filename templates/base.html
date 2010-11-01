@@ -47,30 +47,37 @@
       {% endblock %}
       </div>
       <div class="grid_2">
-      {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
           <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
-      {% else %}
+        {% else %}
           <p>Welcome, new user. Please log in.</p>
-      {% endif %}
+        {% endif %}
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="container_12">
+        <div class="grid_12">
+          {% block menu %}
+          <ul id="main_menu">
+            <li>
+            <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
+            </li>
+            <li>
+            <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
+            </li>
+          </ul>
+          {% endblock %}
+        </div>
       </div>
     </header>
 
     <div class="clear"></div>
 
     <div id="main" class="container_12">
-      <div class="card_container grid_8">
+      <div class="card_container grid_12">
       {% block content %}
       {% endblock %}
-      </div>
-      <div class="sidebar grid_4">
-        <ul>
-          <li>
-          <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
-          </li>
-          <li>
-          <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
-          </li>
-        </ul>
       </div>
     </div>
 

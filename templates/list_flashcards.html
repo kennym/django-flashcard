@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
+    {% block title %}
+      Flashcard list
+    {% endblock %}
+
     {% block header %}
-      <h1>Flashcards:</h1>
+      <h1>Your flashcards:</h1>
     {% endblock %}
 
     {% block content %}
           {% for flashcard in flashcard_list %}
-            <div class="front_view grid_7">
+            <div class="front_view grid_11">
               <h2>
                 <a href="{{ flashcard.get_absolute_url }}">{{ flashcard.front }}</a>
               </h2>

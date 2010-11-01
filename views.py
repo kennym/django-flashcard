@@ -6,7 +6,6 @@ from django.template import RequestContext
 
 from dvoc.models import FlashCard, FlashCardForm
 
-
 @login_required
 def list_flashcards(request, template_name='list_flashcards.html'):
     """

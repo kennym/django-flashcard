@@ -221,6 +221,20 @@ h2 {
     border: 1px dashed;
 }
 
+/* 
+ * The main menu on the top of the page.
+ */
+#main_menu {
+    margin: 10px;
+}
+
+#main_menu li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+
 
 /*
  * Media queries for responsive design
