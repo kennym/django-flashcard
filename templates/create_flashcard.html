@@ -11,9 +11,9 @@
     {% block content %}
       {{ formset.management_form }}
       <form method="post" action="">{% csrf_token %}
-          <table>
-              {{ formset }}
-          </table>
+        <table>
+            {{ formset }}
+        </table>
       <input type="submit" name="Submit" value="Submit this form"> 
       </form>
     {% endblock %}

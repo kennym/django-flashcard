@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 
 
 class FlashCard(models.Model):
@@ -40,4 +40,10 @@ class FlashCard(models.Model):
 class FlashCardForm(ModelForm):
     class Meta:
         model = FlashCard
+        fields = ['front', 'back']
         exclude = ('user')
+        widgets = {
+            'front': Textarea(attrs={'cols': 70, 'rows': 10}),
+            'back': Textarea(attrs={'cols': 70, 'rows': 10}),
+        }
+
