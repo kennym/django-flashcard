@@ -9,11 +9,11 @@ class FlashCard(models.Model):
 
     Has a front and a back view.
     """
-    front = models.CharField(
-                    max_length = 200,
+    front = models.TextField(
+                    max_length = 255,
                     verbose_name = "Front")
-    back = models.CharField(
-                    max_length = 200,
+    back = models.TextField(
+                    max_length = 255,
                     verbose_name = "Back")
     user = models.ForeignKey(User)
 
@@ -38,7 +38,7 @@ class FlashCard(models.Model):
 
 
 class FlashCardForm(ModelForm):
-    class Meta:
+    class Meta():
         model = FlashCard
         fields = ['front', 'back']
         exclude = ('user')
@@ -46,4 +46,3 @@ class FlashCardForm(ModelForm):
             'front': Textarea(attrs={'cols': 70, 'rows': 10}),
             'back': Textarea(attrs={'cols': 70, 'rows': 10}),
         }
-

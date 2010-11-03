@@ -7,27 +7,21 @@ from django.conf.urls.defaults import *
 
 from dj.dvoc import views
 
-from memorize.views import next_practice_item
-
 
 urlpatterns = patterns('',
     url(r'^$',
         views.list_flashcards,
         name = 'list_flashcards'),
-    url(r'^flashcard/(\d+)/$',
+    url(r'^(\d+)/$',
         views.show_details_about,
         name = 'show_details'),
-    url(r'^flashcard/(\d+)/edit/$',
+    url(r'^(\d+)/edit/$',
         views.edit_flashcard,
         name = 'edit_flashcard'),
-    url(r'^flashcard/(\d+)/delete/$',
+    url(r'^(\d+)/delete/$',
         views.delete_flashcard,
         name = 'delete_flashcard'),
-    url(r'^flashcard/create/$',
+    url(r'^create/$',
         views.create_flashcard,
         name = 'create_flashcard'),
-    url(r'^flashcard/next/$',
-        next_practice_item,
-        {'template': 'memorize/next.html'},
-        name='next-flashcard')
 )

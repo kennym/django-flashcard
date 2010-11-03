@@ -18,9 +18,10 @@
           {{ flashcard.back }}
         </div>
 
-        <!-- Somehow floating nowhere... Fix this. -->
-        <a href="{{ flashcard.edit }}">Edit</a>
-        <a href="{{ flashcard.delete }}">Delete</a>
+        <p>
+          <a href="{{ flashcard.edit }}">Edit</a>
+          <a href="{{ flashcard.delete }}">Delete</a>
+        </p>
 
         <div class="clear"></div>
       {% endfor %}

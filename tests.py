@@ -6,6 +6,7 @@ Replace these with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from models import FlashCard
 from views import (
@@ -16,15 +17,24 @@ from views import (
 )
 
 class FlashCardTestCase(TestCase):
-    def test_create_flashcard(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
 
-    def test_list_flashcards(self):
-        pass
-    
+    def setUp(self):
+        self.user = User.objects.create_user("test", "test@localhost",
+                                                 "guessme")
+    def test_create_flashcard_as_valid_user(self):
+        """
+        Create a flashcard with as a valid user in the db.
+        """
+        # Create the flashcard
+        flashcard = FlashCard(
+            front = "Test front",
+            back = "Test Back",
+            user = self.user)
+        # Save it
+        flashcard.save()
+
+        self.assertEquals(FlashCard.objects.all()[0], flashcard)
+
     def test_edit_flashcard(self):
         pass
 

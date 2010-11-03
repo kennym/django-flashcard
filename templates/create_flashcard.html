@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% load markdown_deux_tags %}
+
+
     {% block title %}
       Add a flashcard
     {% endblock %}
@@ -12,8 +15,15 @@
       {{ formset.management_form }}
       <form method="post" action="">{% csrf_token %}
         <table>
-            {{ formset }}
+          {% if error %}
+            {{ error }}
+          {% endif %}
+          {{ formset }}
+
         </table>
+        <p>
+          {% markdown_allowed %}
+        </p>
       <input type="submit" name="Submit" value="Submit this form"> 
       </form>
     {% endblock %}

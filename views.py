@@ -42,6 +42,7 @@ def create_flashcard(request, template_name='create_flashcard.html'):
         if formset.is_valid():
             formset.instance.user = request.user
             formset.save()
+            # Redirect to the flashcard list index.
             return redirect(to='list_flashcards')
     else:
         formset = FlashCardForm()
