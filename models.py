@@ -1,6 +1,27 @@
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from django.db import models
 from django.forms import ModelForm, Textarea
+
+class Practice(models.Model):
+    """
+    The Practice model.
+
+    Its purpose is to track how much a user practiced an object, and how easy
+    it is to him.
+    """
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    item = generic.GenericForeignKey('content_type', 'object_id')
+
+    user = models.ForeignKey(User)
+    next_practice = models.DateField(auto_now_add=True)
+    times_practiced = models.PositiveIntegerField(default=1)
+    easy_factor = models.FloatField(default=2.5)
+
+    class Meta:
+        ordering = ['next_practice']
 
 
 class FlashCard(models.Model):
@@ -16,6 +37,7 @@ class FlashCard(models.Model):
                     max_length = 255,
                     verbose_name = "Back")
     user = models.ForeignKey(User)
+    practice = generic.GenericRelation(Practice)
 
     @models.permalink
     def get_absolute_url(self):
