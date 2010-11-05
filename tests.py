@@ -5,7 +5,8 @@ unittest). These will both pass when you run "manage.py test".
 Replace these with more appropriate tests for your application.
 """
 
-from django.test import TestCase
+from django.core.urlresolvers import reverse
+from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
 from models import FlashCard
@@ -19,32 +20,88 @@ from views import (
 class FlashCardTestCase(TestCase):
 
     def setUp(self):
+        self.password = "password"
         self.user = User.objects.create_user("test", "test@localhost",
-                                                 "guessme")
+                                             self.password)
+        self.client = Client()
+
+    def create_flashcard(self, front="", back=""):
+        """
+        A DRY method for creating a flashcard and returning the instance.
+        """
+        # Create the flashcard
+        flashcard = FlashCard(
+            front = front,
+            back = back,
+            user = self.user)
+        # Save it
+        flashcard.save()
+        return flashcard # Return the FlashCard instance
+
     def test_create_flashcard_as_valid_user(self):
         """
         Create a flashcard with as a valid user in the db.
         """
         # Create the flashcard
-        flashcard = FlashCard(
-            front = "Test front",
-            back = "Test Back",
-            user = self.user)
-        # Save it
-        flashcard.save()
+        flashcard = self.create_flashcard("Test", "Test")
 
-        self.assertEquals(FlashCard.objects.all()[0], flashcard)
+        filter = FlashCard.objects.filter
+        # Check that the the front is the same
+        self.assertEquals(filter(id=flashcard.id).get().front, 
+                          flashcard.front)
+        # Check that the back is the same
+        self.assertEquals(filter(id=flashcard.id).get().back, 
+                          flashcard.back)
+        # Check the ID is the same
+        self.assertEquals(filter(id=flashcard.id).get().id,
+                          flashcard.id)
 
-    def test_edit_flashcard(self):
-        pass
+    def test_edit_flashcard_with_valid_form_data(self):
+        """
+        Assert that editing an existing flashcard gets actually updated.
+        """
+        # Create the flashcard
+        flashcard = self.create_flashcard("Test", "Testback")
+        # Login as the owner of the flashcard
+        login = self.client.login(username=self.user.username,
+                                  password=self.password)
+        self.failUnless(login, "Could not login")
 
-    def test_delete_flashcard(self):
-        pass
+        post_data = {
+            'front' : 'POST',
+            'back' : 'POST',
+            'user' : self.user
+        }
 
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
+        response = self.client.post(reverse('edit_flashcard',
+                                            args=[flashcard.id]),
+                                    post_data)
+        # Should redirect to the detail view page or the flashcard index.
+        self.assertEquals(response.status_code, 302)
+        # Check if the values have really changed of the card
+        self.assertEquals(FlashCard.objects.filter(
+            id=flashcard.id).values()[0]['front'], post_data['front'])
+        self.assertEquals(FlashCard.objects.filter(
+            id=flashcard.id).values()[0]['back'], post_data['back'])
 
->>> 1 + 1 == 2
-True
-"""}
+    def test_delete_flashcard_view(self):
+        """
+        Delete a flashcard.
+        """
+        # Create a flashcard
+        flashcard = self.create_flashcard("TestFront", "Testback")
+        # Login as the owner of the flashcard
+        login = self.client.login(username=self.user.username,
+                                  password=self.password)
+        self.failUnless(login, "Could not login.") 
 
+        response = self.client.get(reverse('delete_flashcard',
+                                           args=[flashcard.id]))
+
+        # Now, it should not exist anymore
+        self.assertEquals(FlashCard.objects.filter(id=flashcard.id).exists(),
+                          False)
+
+
+#__test__ = {"doctest": """
+#"""}
