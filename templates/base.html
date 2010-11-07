@@ -28,6 +28,7 @@
   <!-- CSS : implied media="all" -->
   <link rel="stylesheet" href="/static/css/style.css?v=2">
   <link rel="stylesheet" href="/static/css/960.css">
+  <link rel="stylesheet" href="/static/css/flashcards.css">
 
   <!-- Uncomment if you are specifically targeting less enabled mobile browsers
   <link rel="stylesheet" media="handheld" href="/static/css/handheld.css?v=2">  -->
@@ -42,9 +43,16 @@
   <div id="container" >
     <header class="container_12">
       <div class="grid_10">
-      {% block header %}
-
-      {% endblock %}
+          {% block menu %}
+          <ul id="main_menu">
+            <li>
+            <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
+            </li>
+            <li>
+            <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
+            </li>
+          </ul>
+          {% endblock %}
       </div>
       <div class="grid_2">
         {% if user.is_authenticated %}
@@ -58,16 +66,9 @@
 
       <div class="container_12">
         <div class="grid_12">
-          {% block menu %}
-          <ul id="main_menu">
-            <li>
-            <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
-            </li>
-            <li>
-            <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
-            </li>
-          </ul>
-          {% endblock %}
+					{% block header %}
+
+					{% endblock %}
         </div>
       </div>
     </header>
