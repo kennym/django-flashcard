@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 
-from dvoc.models import FlashCard, FlashCardForm
+from dvoc.models import FlashCard, FlashCardForm, Practice
 
 @login_required
 def list_flashcards(request, template_name='list_flashcards.html'):
@@ -82,3 +82,19 @@ def delete_flashcard(request, flashcard_id):
     """
     FlashCard.objects.filter(id = flashcard_id).delete()
     return redirect('list_flashcards') # Redirect to the flashcard list
+
+@login_required
+def practice_flashcard(request, template_name='practice_flashcard.html'):
+    """
+    Practice a flashcard.
+    """
+    # Get the latest element you should practice
+    practice = Practice.objects.filter(next_practice)
+    flashcard = practice.item
+
+    return_dict = {
+        'practice': practice,
+        'flashcard': flashcard
+    }
+    return render_to_response(template_name, return_dict,
+                              context_instance=RequestContext(request))

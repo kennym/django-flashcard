@@ -20,6 +20,8 @@ class Practice(models.Model):
     times_practiced = models.PositiveIntegerField(default=1)
     easy_factor = models.FloatField(default=2.5)
 
+    def __unicode__(self):
+        return "Flashcard (%s)" % self.item.front
     class Meta:
         ordering = ['next_practice']
 
@@ -37,7 +39,7 @@ class FlashCard(models.Model):
                     max_length = 255,
                     verbose_name = "Back")
     user = models.ForeignKey(User)
-    practice = generic.GenericRelation(Practice)
+    practice = generic.GenericForeignKey(Practice)
 
     @models.permalink
     def get_absolute_url(self):

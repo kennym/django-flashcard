@@ -38,6 +38,14 @@ class FlashCardTestCase(TestCase):
         flashcard.save()
         return flashcard # Return the FlashCard instance
 
+    def login(self, username=None, password=None):
+        user = username or self.user.username
+        pw   = password or self.password
+        # Login as the owner of the flashcard
+        login = self.client.login(username=user,
+                                  password=pw)
+        return login
+
     def test_create_flashcard_as_valid_user(self):
         """
         Create a flashcard with as a valid user in the db.
@@ -56,6 +64,20 @@ class FlashCardTestCase(TestCase):
         self.assertEquals(filter(id=flashcard.id).get().id,
                           flashcard.id)
 
+    def test_login_as_valid_user(self):
+        """
+        Log-in as a valid user.
+        """
+        login = self.login()
+        self.failUnless(login, "Could not login")
+
+    def test_login_as_invalid_user(self):
+        """
+        Log-in as an invalid user.
+        """
+        login = self.login("Invalid_user", "Invalid_password")
+        self.assertEquals(login, False)
+
     def test_edit_flashcard_with_valid_form_data(self):
         """
         Assert that editing an existing flashcard gets actually updated.
@@ -63,10 +85,9 @@ class FlashCardTestCase(TestCase):
         # Create the flashcard
         flashcard = self.create_flashcard("Test", "Testback")
         # Login as the owner of the flashcard
-        login = self.client.login(username=self.user.username,
-                                  password=self.password)
-        self.failUnless(login, "Could not login")
+        self.login()
 
+        # The data to fill in the form
         post_data = {
             'front' : 'POST',
             'back' : 'POST',
@@ -91,17 +112,25 @@ class FlashCardTestCase(TestCase):
         # Create a flashcard
         flashcard = self.create_flashcard("TestFront", "Testback")
         # Login as the owner of the flashcard
-        login = self.client.login(username=self.user.username,
-                                  password=self.password)
-        self.failUnless(login, "Could not login.") 
-
+        self.login()
+        # Make the request
         response = self.client.get(reverse('delete_flashcard',
                                            args=[flashcard.id]))
-
         # Now, it should not exist anymore
         self.assertEquals(FlashCard.objects.filter(id=flashcard.id).exists(),
                           False)
 
+    def test_practice_flashcard(self):
+        """
+        Practice the flashcard with the given ID.
+        """
+        # Create the flashcard
+        flashcard = self.create_flashcard("PracticeFront", "PracticeBack")
+        # Log-in as the owner of the flashcard
+        self.login()
+        # Make the request
+        response = self.client.get(reverse('practice_flashcard',
+                                           args=[flashcard.id]))
 
-#__test__ = {"doctest": """
-#"""}
+        # Check that the flashcard object is passed to the template
+        self.fail("Missing logic.")
