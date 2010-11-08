@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+	
+	{% block title %}
+        Practice flashcard #{{ flashcard.id }}
+	{% endblock %}
+
+	{% block extrajs %}
+       <script type="text/javascript">
+            $('#clickme').click(function() {
+              //$('.back_hidden').toggle('slow', function() {
+              $('.practice_back').replaceWith('{{ flashcard.back }}');
+            });
+        </script>
+	{% endblock %}
+
+	{% block header %}
+		<h1>Practice flashcards </h1>
+	{% endblock %}
+
+	{% block content %}
+		<div>
+			<div class="front_view">{{ flashcard.front }}</div>
+			<div id="clickme" class="back_view">
+                <div class="practice_back">
+                    <b>Show the answer...</b>
+                </div>
+            </div>
+		</div>
+	{% endblock %}

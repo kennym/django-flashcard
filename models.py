@@ -4,6 +4,12 @@ from django.contrib.contenttypes import generic
 from django.db import models
 from django.forms import ModelForm, Textarea
 
+
+class NextPracticeManager(models.Manager):
+    def get_query_set(self):
+        return super(NextPracticeManager,
+                     self).get_query_set().order_by('next_practice')
+
 class Practice(models.Model):
     """
     The Practice model.
@@ -20,8 +26,13 @@ class Practice(models.Model):
     times_practiced = models.PositiveIntegerField(default=1)
     easy_factor = models.FloatField(default=2.5)
 
+    # Managers
+    objects = models.Manager()
+    next_to_practice = NextPracticeManager()
+
     def __unicode__(self):
         return "Flashcard (%s)" % self.item.front
+
     class Meta:
         ordering = ['next_practice']
 

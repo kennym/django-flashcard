@@ -84,12 +84,12 @@ def delete_flashcard(request, flashcard_id):
     return redirect('list_flashcards') # Redirect to the flashcard list
 
 @login_required
-def practice_flashcard(request, template_name='practice_flashcard.html'):
+def practice_flashcards(request, template_name='practice_flashcards.html'):
     """
     Practice a flashcard.
     """
     # Get the latest element you should practice
-    practice = Practice.objects.filter(next_practice)
+    practice = Practice.next_to_practice.all()[0]
     flashcard = practice.item
 
     return_dict = {

@@ -129,8 +129,7 @@ class FlashCardTestCase(TestCase):
         # Log-in as the owner of the flashcard
         self.login()
         # Make the request
-        response = self.client.get(reverse('practice_flashcard',
-                                           args=[flashcard.id]))
+        response = self.client.get(reverse('practice_flashcards'))
 
         # Check that the flashcard object is passed to the template
         self.fail("Missing logic.")

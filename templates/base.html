@@ -35,8 +35,6 @@
  
   <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
   <script src="/static/js/libs/modernizr-1.6.min.js"></script>
-  {% block extrajs %}
-  {% endblock %}
 </head>
 
 <body>
@@ -46,10 +44,13 @@
           {% block menu %}
           <ul id="main_menu">
             <li>
-            <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
+              <a href="{% url dvoc.views.list_flashcards %}">View flashcards</a>
             </li>
             <li>
-            <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
+              <a href="{% url dvoc.views.create_flashcard %}">Add flashcard</a>
+            </li>
+            <li>
+              <a href="{% url dvoc.views.practice_flashcards %}">Practice</a>
             </li>
           </ul>
           {% endblock %}
@@ -101,6 +102,8 @@
   <script src="/static/js/plugins.js"></script>
   <script src="/static/js/script.js"></script>
   <!-- end concatenated and minified scripts-->
+  {% block extrajs %}
+  {% endblock %}
   
   
   <!--[if lt IE 7 ]>
