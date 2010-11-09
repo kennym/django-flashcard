@@ -6,9 +6,9 @@
 
 	{% block extrajs %}
        <script type="text/javascript">
-            $('#clickme').click(function() {
+            $('.clickme').click(function() {
               //$('.back_hidden').toggle('slow', function() {
-              $('.practice_back').replaceWith('{{ flashcard.back }}');
+              $('.practice_back').replaceWith('{{ practice.back }}');
             });
         </script>
 	{% endblock %}
@@ -19,11 +19,14 @@
 
 	{% block content %}
 		<div>
-			<div class="front_view">{{ flashcard.front }}</div>
-			<div id="clickme" class="back_view">
+			<div class="front_view">{{ practice.front }}</div>
+			<div class="clickme back_view">
                 <div class="practice_back">
                     <b>Show the answer...</b>
                 </div>
+            </div>
+            <div class="rating_box">
+                {{ form.as_p }}
             </div>
 		</div>
 	{% endblock %}

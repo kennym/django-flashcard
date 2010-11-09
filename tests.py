@@ -120,6 +120,11 @@ class FlashCardTestCase(TestCase):
         self.assertEquals(FlashCard.objects.filter(id=flashcard.id).exists(),
                           False)
 
+    def test_create_practice_item_with_flashcard_creation(self):
+        # Create the flashcard
+        flashcard = self.create_flashcard("PracticeFront", "PracticeBack")
+        # Create Practice() object
+
     def test_practice_flashcard(self):
         """
         Practice the flashcard with the given ID.
