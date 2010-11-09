@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
@@ -82,6 +82,7 @@ def delete_flashcard(request, flashcard_id):
     Delete a flashcard given the `ID`.
     """
     FlashCard.objects.filter(id = flashcard_id).delete()
+
     return redirect('list_flashcards') # Redirect to the flashcard list
 
 @login_required
@@ -106,10 +107,17 @@ def practice_flashcards(request, template_name='practice_flashcards.html'):
     return render_to_response(template_name, return_dict,
                               context_instance=RequestContext(request))
 
-def process_rating(request, post_save_redirect):
-    form = RatingForm(request.POST)
-    if form.is_valid():
-        practice_item = get_object_or_404(
-            Flashcard, pk=int(form.cleaned_data['id']))
-        practice_item.set_next_practice(int(form.cleaned_data['rating']))
-        practice_item.save()
+@csrf_protect
+@login_required
+def process_rating(request):
+    if request.method == "POST":
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            practice_item = get_object_or_404(FlashCard,
+                                              pk=int(form.cleaned_data['id']))
+            practice_item.set_next_practice(int(form.cleaned_data['rating']))
+            practice_item.save()
+
+            return redirect(to='list_flashcards')
+    else:
+        return HttpResponseBadRequest("There's nothing here. Haha.")

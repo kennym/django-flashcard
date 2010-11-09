@@ -9,9 +9,14 @@ from datetime import date, timedelta
 from algorithm import interval
 
 
-class FlashCardPracticeManager(models.Manager):
+class FlashCardByPracticeManager(models.Manager):
     def get_query_set(self):
         return FlashCard.objects.all().order_by('next_practice')
+
+
+class FlashCardByEasyFactorManager(models.Manager):
+    def get_query_set(self):
+        return FlashCard.objects.all().order_by('easy_factor')
 
 
 class FlashCard(models.Model):
@@ -34,8 +39,8 @@ class FlashCard(models.Model):
 
     # Managers
     objects = models.Manager()
-    by_practice = FlashCardPracticeManager()
-    by_easy_factor = None # TODO
+    by_practice = FlashCardByPracticeManager()
+    by_easy_factor = FlashCardByEasyFactorManager()
     by_times_practiced = None # TODO
 
     @models.permalink
@@ -69,6 +74,7 @@ class FlashCard(models.Model):
     class Meta:
         verbose_name = "Flashcard"
         verbose_name_plural = "Flashcards"
+
 
 class FlashCardForm(ModelForm):
     class Meta():
