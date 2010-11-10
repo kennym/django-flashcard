@@ -21,6 +21,12 @@ class RatingForm(forms.Form):
     id = forms.IntegerField(widget=forms.HiddenInput)
     rating = forms.ChoiceField(choices=RATINGS)
 
+SORTING = ((0, 'By alphabet'),
+           (1, 'By next practice'))
+
+class SortFlashcardsForm(forms.Form):
+    sort_by = forms.ChoiceField(choices=SORTING)
+
 
 class FlashCardForm(ModelForm):
     class Meta():

@@ -11,8 +11,9 @@ from algorithm import interval
 
 class FlashCardByPracticeManager(models.Manager):
     def get_query_set(self):
-        return FlashCard.objects.all().order_by('next_practice')
-
+        return FlashCard.objects.exclude(
+            next_practice__gte=datetime.now()
+        )
 
 class FlashCardByEasyFactorManager(models.Manager):
     def get_query_set(self):
@@ -56,7 +57,7 @@ class FlashCard(models.Model):
         return ('delete_flashcard', [str(self.id)])
 
     def set_next_practice(self, rating):
-        if not 1 <= rating <= 5:
+        if not 0 <= rating <= 5:
             raise ValidationError("Rating must be in range from 1 to 5")
         days, ef = interval(self.times_practiced, rating,
                             self.easy_factor)

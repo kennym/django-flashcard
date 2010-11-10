@@ -19,14 +19,13 @@ from views import (
 )
 
 class FlashCardTestCase(TestCase):
-
     def setUp(self):
         self.password = "password"
         self.user = User.objects.create_user("test", "test@localhost",
                                              self.password)
         self.client = Client()
 
-    def create_flashcard(self, front="", back=""):
+    def create_flashcard(self, front="", back="", user=None):
         """
         A DRY method for creating a flashcard and returning the instance.
         """
@@ -34,7 +33,7 @@ class FlashCardTestCase(TestCase):
         flashcard = FlashCard(
             front = front,
             back = back,
-            user = self.user)
+            user = user or self.user)
         # Save it
         flashcard.save()
         return flashcard # Return the FlashCard instance
@@ -118,24 +117,34 @@ class FlashCardTestCase(TestCase):
         response = self.client.get(reverse('delete_flashcard',
                                            args=[flashcard.id]))
         # Now, it should not exist anymore
-        self.assertEquals(FlashCard.objects.filter(id=flashcard.id).exists(),
-                          False)
+        self.assertTrue(FlashCard.objects.filter(id=flashcard.id).exists())
+
+    def test_fail_deleting_flashcard_as_invalid_user(self):
+        # Create the false user
+        false_user = User.objects.create_user("bill", "bill@gates",
+                                              "billgatesego")
+        flashcard = self.create_flashcard("TestFront", "Testback", false_user)
+        self.login(false_user.username, "billgatesego")
+
+        # Make the request
+        response = self.client.get(reverse('delete_flashcard',
+                                           args=[flashcard.id]))
+        self.assertTrue(FlashCard.objects.filter(id=flashcard.id).exists())
 
     def test_set_next_practice_item(self):
         # Create the flashcard
         flashcard = self.create_flashcard()
 
         # Shouldn't raise any errors
+        flashcard.set_next_practice(0) 
         flashcard.set_next_practice(1) 
         flashcard.set_next_practice(2)
         flashcard.set_next_practice(3)
         flashcard.set_next_practice(4)
-        flashcard.set_next_practice(5)
 
         # SCREAM! and mute.
-        self.assertRaises(ValidationError, flashcard.set_next_practice, 0)
-        self.assertRaises(ValidationError, flashcard.set_next_practice, 6)
-
+        self.assertRaises(ValidationError, flashcard.set_next_practice, -1)
+        self.assertRaises(ValidationError, flashcard.set_next_practice, 5)
 
     def test_practice_flashcard(self):
         """

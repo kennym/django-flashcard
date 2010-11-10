@@ -203,40 +203,6 @@ button {  width: auto; overflow: visible; }
 /* Fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
 .clearfix { zoom: 1; }
 
- /* Primary Styles
-    Author: Kenny Meyer
- */
-
-h1 {
-    font-size: 2em;
-}
-
-h2 {
-    font-size: 1.5em;
-}
-
-.front_view, 
-.back_view {
-    margin: 5px 0px 0px 0px;
-    padding: 5px;
-    border: 1px solid;
-}
-
-/* 
- * The main menu on the top of the page.
- */
-#main_menu {
-    margin: 10px;
-}
-
-#main_menu li {
-    display: inline;
-    list-style-type: none;
-    padding-right: 20px;
-}
-
-
-
 /*
  * Media queries for responsive design
  * These follow after primary styles so they will successfully override. 

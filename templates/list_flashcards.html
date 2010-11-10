@@ -9,7 +9,8 @@
     {% endblock %}
 
     {% block content %}
-      {% for flashcard in flashcard_list %}
+      {% if flashcard_list %}
+        {% for flashcard in flashcard_list %}
         <div class="front_view grid_11">
           <h2>
             <a href="{{ flashcard.get_absolute_url }}">{{ flashcard.front }}</a>
@@ -18,11 +19,15 @@
           {{ flashcard.back }}
         </div>
 
-        <p>
-          <a href="{{ flashcard.edit }}">Edit</a>
+        <p> <a href="{{ flashcard.edit }}">Edit</a>
           <a href="{{ flashcard.delete }}">Delete</a>
         </p>
 
         <div class="clear"></div>
-      {% endfor %}
+        {% endfor %}
+      {% else %}
+        <div class="grid_12">
+            No flashcards! <a href="{% url dvoc.views.create_flashcard %}">Add some now!</a>
+        </div>
+      {% endif %}
     {% endblock %}
