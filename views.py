@@ -5,7 +5,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 
 from dvoc.forms import RatingForm
-from dvoc.models import FlashCard, FlashCardForm
+from dvoc.models import FlashCard
+from dvoc.forms import FlashCardForm
 
 @login_required
 def list_flashcards(request, template_name='list_flashcards.html'):

@@ -18,18 +18,33 @@
 	{% endblock %}
 
 	{% block content %}
-		<div>
-			<div class="front_view">{{ practice.front }}</div>
-			<div class="clickme back_view">
-                <div class="practice_back">
-                    <b>Show the answer...</b>
-                </div>
+        {% if errors %}
+        <div class="error_box">
+            {% for error in errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="front_view">{{ practice.front }}</div>
+
+        <div class="clickme back_view">
+            <div class="practice_back">
+                <b>Show the answer...</b>
             </div>
-            <div class="rating_box">
-                <form method="post" action="{% url dj.dvoc.views.process_rating %}">{% csrf_token %}
-                {{ form.as_p }}
-                <p><input type="submit" name="Submit" /></p>
-                </form>
-            </div>
-		</div>
+        </div>
+
+        <div class="rating_box">
+            <form method="post" action="{% url dj.dvoc.views.process_rating %}">{% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" name="Submit" /></p>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if debug %}
+        <div>
+            <p>Next practice: {{ practice.next_practice }}</p>
+            <p>Easy factor: {{ practice.easy_factor }}</p>
+        </div>
+        {% endif %}
 	{% endblock %}

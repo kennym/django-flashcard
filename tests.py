@@ -6,6 +6,7 @@ Replace these with more appropriate tests for your application.
 """
 
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ValidationError
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
@@ -120,10 +121,21 @@ class FlashCardTestCase(TestCase):
         self.assertEquals(FlashCard.objects.filter(id=flashcard.id).exists(),
                           False)
 
-    def test_create_practice_item_with_flashcard_creation(self):
+    def test_set_next_practice_item(self):
         # Create the flashcard
-        flashcard = self.create_flashcard("PracticeFront", "PracticeBack")
-        # Create Practice() object
+        flashcard = self.create_flashcard()
+
+        # Shouldn't raise any errors
+        flashcard.set_next_practice(1) 
+        flashcard.set_next_practice(2)
+        flashcard.set_next_practice(3)
+        flashcard.set_next_practice(4)
+        flashcard.set_next_practice(5)
+
+        # SCREAM! and mute.
+        self.assertRaises(ValidationError, flashcard.set_next_practice, 0)
+        self.assertRaises(ValidationError, flashcard.set_next_practice, 6)
+
 
     def test_practice_flashcard(self):
         """
@@ -134,7 +146,7 @@ class FlashCardTestCase(TestCase):
         # Log-in as the owner of the flashcard
         self.login()
         # Make the request
-        response = self.client.get(reverse('practice_flashcard'))
+        response = self.client.get(reverse('practice_flashcards'))
 
-        # Check that the flashcard object is passed to the template
-        self.fail("Missing logic.")
+        # TODO: Post the rating.
+        self.fail()

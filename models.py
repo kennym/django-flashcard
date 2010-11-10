@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.exceptions import ValidationError
 from django.db import models
-from django.forms import ModelForm, Textarea
 
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 
 from algorithm import interval
 
@@ -56,9 +56,11 @@ class FlashCard(models.Model):
         return ('delete_flashcard', [str(self.id)])
 
     def set_next_practice(self, rating):
+        if not 1 <= rating <= 5:
+            raise ValidationError("Rating must be in range from 1 to 5")
         days, ef = interval(self.times_practiced, rating,
                             self.easy_factor)
-        self.next_practice = date.today() + timedelta(days=days)
+        self.next_practice = datetime.today() + timedelta(days=days)
         self.times_practiced += 1
         self.easy_factor = ef
 
@@ -74,14 +76,3 @@ class FlashCard(models.Model):
     class Meta:
         verbose_name = "Flashcard"
         verbose_name_plural = "Flashcards"
-
-
-class FlashCardForm(ModelForm):
-    class Meta():
-        model = FlashCard
-        fields = ['front', 'back']
-        exclude = ('user')
-        widgets = {
-            'front': Textarea(attrs={'cols': 70, 'rows': 10}),
-            'back': Textarea(attrs={'cols': 70, 'rows': 10}),
-        }
