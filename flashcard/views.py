@@ -4,9 +4,9 @@ from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 
-from dvoc.forms import RatingForm
-from dvoc.models import FlashCard
-from dvoc.forms import FlashCardForm
+from forms import RatingForm
+from models import FlashCard
+from forms import FlashCardForm
 
 @login_required
 def list_flashcards(request, template_name='list_flashcards.html'):

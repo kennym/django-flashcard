@@ -5,16 +5,15 @@ try:
 except ImportError:
     from distutils.core import setup
 
-app_name = 'flascard'
+app_name = 'flashcard'
 version = '0.1.0'
 
 if __name__ == '__main__':
     setup(
-        name        = 'django' + app_name,
-        description = 'A flashcard application to practice virtual two-sided
-        cards',
+        name        = 'django-' + app_name,
+        description = 'A flashcard application to practice virtual two-sided cards',
         long_description = open('README', 'r').read(),
-        author      = 'Kenny Meyer'
+        author      = 'Kenny Meyer',
         author_email= 'knny.myer@gmail.com',
         version     = version,
         packages    = ['flashcard'],

@@ -7,7 +7,7 @@ from django.forms import ModelForm, Textarea
 from django import forms
 from django.core.exceptions import ValidationError
 
-from dvoc.models import FlashCard
+from models import FlashCard
 
 
 RATINGS = ((0, 'Blackout'), 
