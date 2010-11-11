@@ -17,7 +17,7 @@ if __name__ == '__main__':
         author_email= 'knny.myer@gmail.com',
         version     = version,
         packages    = ['flashcard'],
-        url         = 'http://github.com/km0r3/dvoc',
+        url         = 'http://github.com/km0r3/django-flashcard',
         license     = 'BSD',
         keywords    = 'django flashcard practice',
         classifiers = [
