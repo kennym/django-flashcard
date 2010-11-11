@@ -1,22 +1,28 @@
 #!/usr/bin/env python
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+import os
 
-app_name = 'flashcard'
+from setuptools import setup, find_packages
+
 version = '0.1.0'
+
+def read_file(name):
+    return open(os.path.join(os.path.dirname(__file__),
+                             name)).read()
+
+readme = read_file('README')
+changes = read_file('CHANGES.txt')
 
 if __name__ == '__main__':
     setup(
-        name        = 'django-' + app_name,
+        name        = 'django-flashcard',
         description = 'A flashcard application to practice virtual two-sided cards',
-        long_description = open('README', 'r').read(),
+        long_description = ''.join(readme),
         author      = 'Kenny Meyer',
         author_email= 'knny.myer@gmail.com',
         version     = version,
-        packages    = ['flashcard'],
+        packages = find_packages('src'),
+        package_dir = {'': 'src'},
         url         = 'http://github.com/km0r3/django-flashcard',
         license     = 'BSD',
         keywords    = 'django flashcard practice',
@@ -33,4 +39,14 @@ if __name__ == '__main__':
             'Topic :: Education',
             'Topic :: Software Development :: Libraries :: Python Modules',
         ],
+        install_requires = [
+            'setuptools',
+            'zc.buildout',
+            'zc.recipe.egg',
+        ],
+        entry_points = """
+        # -*- Entry points: -*-
+        [zc.buildout]
+        default = djangorecipe.recipe:Recipe
+        """,
     )
