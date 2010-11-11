@@ -5,7 +5,7 @@ __email__ = "knny.myer@gmail.com"
 
 from django.conf.urls.defaults import *
 
-from dj.dvoc import views
+import views
 
 
 urlpatterns = patterns('',
