@@ -1,0 +1,46 @@
+/*
+ * The flashcard CSS styles.
+ *
+ * Author: Kenny Meyer
+ */
+
+body, p {
+    font-family:Arial;
+}
+
+h1 {
+    text-align:left;
+    font-size:30px;
+    line-height:normal;
+    color:#0068B1;
+}
+
+
+#main_menu {
+    margin: 10px;
+}
+
+#main_menu li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+.front_view, 
+.back_view {
+    margin: 0px 0px 5px 0px;
+    padding: 5px;
+    border: 1px solid;
+}
+
+.practice_back {
+
+}
+
+.rating_box {
+
+}
+
+.error_box {
+    border: 1px red solid;
+}

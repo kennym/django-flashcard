@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+	
+	{% block title %}
+        Practice flashcard #{{ flashcard.id }}
+	{% endblock %}
+
+	{% block extrajs %}
+       <script type="text/javascript">
+            $('.clickme').click(function() {
+              //$('.back_hidden').toggle('slow', function() {
+              $('.practice_back').replaceWith('{{ practice.back }}');
+            });
+        </script>
+	{% endblock %}
+
+	{% block header %}
+		<h1>Practice flashcards </h1>
+	{% endblock %}
+
+	{% block content %}
+        {% if errors %}
+        <div class="error_box">
+            {% for error in errors %}
+            {{ error }}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="front_view">{{ practice.front }}</div>
+
+        <div class="clickme back_view">
+            <div class="practice_back">
+                <b>Show the answer...</b>
+            </div>
+        </div>
+
+        <div class="rating_box">
+            <form method="post" action="{% url dj.dvoc.views.process_rating %}">{% csrf_token %}
+            {{ form.as_table }}
+            <input type="submit" name="Submit" value="Submit and continue"/>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if debug %}
+        <div>
+            <p>Next practice: {{ practice.next_practice }}</p>
+            <p>Easy factor: {{ practice.easy_factor }}</p>
+        </div>
+        {% endif %}
+	{% endblock %}

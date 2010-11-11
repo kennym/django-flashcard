@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+    {% block title %}
+      Edit flashcard
+    {% endblock %}
+
+    {% block header %}
+       <h1>Edit the flashcard.</h1>
+    {% endblock %}
+
+    {% block content %}
+      <form method="post" action="">{% csrf_token %}
+        {{ form.as_p }}
+      <p><input type="submit" name="Submit" value="Submit this form"></p>
+      </form>
+    {% endblock %}
