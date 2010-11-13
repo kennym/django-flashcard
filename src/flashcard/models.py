@@ -11,7 +11,7 @@ from algorithm import interval
 
 class FlashCardByPracticeManager(models.Manager):
     def get_query_set(self):
-        return FlashCard.objects.exclude(
+        return FlashCard.objects.filter(
             next_practice__gte=datetime.now()
         )
 
