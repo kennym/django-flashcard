@@ -87,7 +87,7 @@ def delete_flashcard(request, flashcard_id):
     return redirect('list_flashcards') # Redirect to the flashcard list
 
 @login_required
-def practice_flashcards(request, template_name='practice_flashcards.html'):
+def practice_flashcards(request, type='',  template_name='practice_flashcards.html'):
     """
     Practice a flashcard.
     """
@@ -99,6 +99,11 @@ def practice_flashcards(request, template_name='practice_flashcards.html'):
 
     practice = practices[0]
     form = RatingForm(initial={'id': practice.id})
+
+    # Multiple choice practice
+    if type == "multiple":
+        # Return a list with three random flashcard items
+        solutions = [].append(FlashCard.objects.all().order_by('?')[:2]
 
     return_dict = {
         'practice': practice,
