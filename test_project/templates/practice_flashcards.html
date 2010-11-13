@@ -34,7 +34,7 @@
         </div>
 
         <div class="rating_box">
-            <form method="post" action="{% url dj.dvoc.views.process_rating %}">{% csrf_token %}
+            <form method="post" action="{% url flashcard.views.process_rating %}">{% csrf_token %}
             {{ form.as_table }}
             <input type="submit" name="Submit" value="Submit and continue"/>
             </form>
