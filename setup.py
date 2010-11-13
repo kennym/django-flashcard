@@ -4,7 +4,7 @@ import os
 
 from setuptools import setup, find_packages
 
-version = '0.1.0'
+version = '0.1.1'
 
 def read_file(name):
     return open(os.path.join(os.path.dirname(__file__),
