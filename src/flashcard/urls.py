@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^$',
         views.list_flashcards,
         name = 'list_flashcards'),
-    # FIXME: Make passing a string optional
     url(r'^practice/$',
         views.practice_flashcards,
         name = 'practice_flashcards'),

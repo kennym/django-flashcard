@@ -1,7 +1,13 @@
 # -*- mode: python; coding: utf-8; -*-
 
 """
-Template tag which returns a list of the next practice objects in the db.
+Template tag which returns a list of the next practice objects for a given user
+
+How to use in the template:
+
+    {% get_next_practices <quantity> %}
+
+    <quantity> - the number of practice objects to return
 """
 
 __author__ = "Kenny Meyer"
@@ -17,9 +23,10 @@ def do_next_practices(parser, token):
     bits = token.contents.split()
     if len(bits) != 2:
         raise TemplateSyntaxError, \
-                "get_next_practices takes exactly one argument"
+                "get_next_practices takes exactly one argument: `quantity`."
 
-    return NextPracticesNode(bits[1])
+    quantity = bits[1]
+    return NextPracticesNode(quantity)
 
 class NextPracticesNode(template.Node):
     def __init__(self, quantity):
