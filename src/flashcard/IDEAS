@@ -1,4 +1,9 @@
-Multiple choice practice mode:
+- Multiple choice practice mode:
 
 The user sees a single flashcard front, and three flashcard backs. 
 He then has to choose the one which corresponds to the flashcard front.
+
+- Show next practice items in practice mode
+
+Probably create a template tag for this, and show it in the bottom of
+the practice mode.

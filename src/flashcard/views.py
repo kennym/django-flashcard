@@ -18,7 +18,8 @@ def list_flashcards(request, template_name='list_flashcards.html'):
         'flashcard_list': flashcard_list
     }
 
-    return render_to_response(template_name, return_dict)
+    return render_to_response(template_name, return_dict,
+                             context_instance=RequestContext(request))
 
 @login_required
 def show_details_about(request, request_id, template_name='show_details.html'):
@@ -87,7 +88,7 @@ def delete_flashcard(request, flashcard_id):
     return redirect('list_flashcards') # Redirect to the flashcard list
 
 @login_required
-def practice_flashcards(request, type='',  template_name='practice_flashcards.html'):
+def practice_flashcards(request, mode='',  template_name='practice_flashcards.html'):
     """
     Practice a flashcard.
     """
@@ -95,20 +96,28 @@ def practice_flashcards(request, type='',  template_name='practice_flashcards.ht
     practices = FlashCard.by_practice.filter(user=request.user)
     if len(practices) == 0:
         return render_to_response(template_name, {
-            'errors': ['No items to practice']})
+            'errors': ['No items to practice']},
+            context_instance=RequestContext(request))
 
     practice = practices[0]
     form = RatingForm(initial={'id': practice.id})
 
     # Multiple choice practice
-    if type == "multiple":
+    if mode == "multiple":
         # Return a list with three random flashcard items
-        solutions = [].append(FlashCard.objects.all().order_by('?')[:2]
+        solutions = FlashCard.objects.all().order_by('?')[:2]
 
-    return_dict = {
-        'practice': practice,
-        'form': form
-    }
+        return_dict = {
+            'practice': practice,
+            'form': form,
+            'solutions': solutions
+        }
+    # default to "single"
+    else:
+        return_dict = {
+            'practice': practice,
+            'form': form,
+        }
 
     return render_to_response(template_name, return_dict,
                               context_instance=RequestContext(request))
