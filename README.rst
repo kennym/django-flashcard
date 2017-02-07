@@ -1,6 +1,8 @@
 A simple and reusable flashcard application for the Django web framework
 ========================================================================
 
+**This project is not being maintained nor is it in a working state. Please consider other projects as an alternative... I'm leaving this project up for educational purposes only**
+
 What is the motivation behind the project?
 ------------------------------------------
 
